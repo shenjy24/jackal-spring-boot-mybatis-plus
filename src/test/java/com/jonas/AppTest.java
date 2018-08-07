@@ -2,6 +2,7 @@ package com.jonas;
 
 import com.jonas.mapper.UserMapper;
 import com.jonas.entity.User;
+import com.jonas.utils.SnowFlake;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class AppTest {
 
     @Autowired
-    @Qualifier("userMapper")
     private UserMapper userMapper;
+
+    @Autowired
+    private SnowFlake snowFlake;
 
     @Test
     public void insert() {
@@ -31,5 +34,12 @@ public class AppTest {
         Long id = user.getUserId();
         System.err.println("影响行数==>" + row);
         System.err.println("id==>" + id);
+    }
+
+    @Test
+    public void nextId() {
+        for (int i = 0; i < 10; i++) {
+            System.out.println(snowFlake.nextId());
+        }
     }
 }
