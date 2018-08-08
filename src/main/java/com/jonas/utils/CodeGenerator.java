@@ -45,8 +45,8 @@ public class CodeGenerator {
 
         config.setActiveRecord(false)
                 .setAuthor("Jonas")
-                .setOutputDir("main/java")
-                .setFileOverride(true);
+                .setOutputDir("src/main/java")
+                .setFileOverride(false);
         if (!serviceNameStartWithI) {
             config.setServiceName("%sService");
         }
