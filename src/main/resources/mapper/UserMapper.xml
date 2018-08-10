@@ -6,7 +6,7 @@
     <!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
 
     <select id="selectMyPage" resultType="User">
-        select * from User
+        select * from user
         <where>
             ${ew.sqlSegment}
         </where>
