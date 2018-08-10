@@ -1,14 +1,20 @@
 package com.jonas;
 
-import com.jonas.mapper.UserMapper;
+import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jonas.entity.User;
+import com.jonas.mapper.UserMapper;
+import com.jonas.service.UserService;
 import com.jonas.utils.SnowFlake;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 /**
  * Unit test for simple App.
@@ -21,6 +27,9 @@ public class AppTest {
     private UserMapper userMapper;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private SnowFlake snowFlake;
 
     @Test
@@ -28,12 +37,20 @@ public class AppTest {
         User user = new User();
         user.setUserName("mybatis");
         user.setUserAge(10);
-        user.setCtime(System.currentTimeMillis()/1000);
-        user.setUtime(System.currentTimeMillis()/1000);
-        Integer row = userMapper.insert(user);
-        Long id = user.getUserId();
-        System.err.println("影响行数==>" + row);
-        System.err.println("id==>" + id);
+        user = userService.saveUser(user);
+        System.out.println(user);
+    }
+
+    @Test
+    public void testQuery() {
+        Page<User> page = userService.queryUser();
+        System.out.println(page.getRecords());
+    }
+
+    @Test
+    public void testSumAge() {
+        Integer sum = userService.sumAge();
+        System.out.println(sum);
     }
 
     @Test
