@@ -1,11 +1,7 @@
 package com.jonas;
 
-import com.baomidou.mybatisplus.mapper.Condition;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.jonas.entity.User;
-import com.jonas.mapper.UserMapper;
 import com.jonas.service.UserService;
 import com.jonas.utils.SnowFlake;
 import org.junit.Test;
@@ -14,17 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 /**
  * Unit test for simple App.
  */
-@SpringBootTest
+@SpringBootTest(classes = App.class)
 @RunWith(SpringRunner.class)
 public class AppTest {
-
-    @Autowired
-    private UserMapper userMapper;
 
     @Autowired
     private UserService userService;
@@ -49,7 +42,7 @@ public class AppTest {
 
     @Test
     public void testSumAge() {
-        Integer sum = userService.sumAge();
+        BigDecimal sum = userService.sumAge();
         System.out.println(sum);
     }
 

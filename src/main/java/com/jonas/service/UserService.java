@@ -9,6 +9,7 @@ import com.jonas.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -43,11 +44,11 @@ public class UserService {
         return page;
     }
 
-    public Integer sumAge() {
+    public BigDecimal sumAge() {
         Wrapper wrapper = Condition.create()
                 .setSqlSelect("sum(user_age)")
                 .eq("user_id", 1027800640532697089L);
-        List<Integer> result  = userMapper.selectObjs(wrapper);
+        List<BigDecimal> result  = userMapper.selectObjs(wrapper);
         return result.get(0);
     }
 
