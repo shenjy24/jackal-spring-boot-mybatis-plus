@@ -54,7 +54,6 @@ public class UserService {
 
     public Page<User> selectMyPage() {
         Wrapper wrapper = Condition.create()
-                .setSqlSelect("sum(user_age)")
                 .eq("user_id", 1027800640532697089L);
 
         Page<User> page = new Page<>();
