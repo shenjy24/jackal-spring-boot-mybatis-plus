@@ -1,7 +1,7 @@
 package com.jonas.controller;
 
-import com.jonas.mapper.UserMapper;
 import com.jonas.entity.User;
+import com.jonas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,19 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
-    @RequestMapping("/insert")
-    public User insert() {
+    @RequestMapping("/save")
+    public User save(String name, Integer age) {
         User user = new User();
-        user.setUserName("mybatis");
-        user.setUserAge(10);
-        user.setCtime(System.currentTimeMillis()/1000);
-        user.setUtime(System.currentTimeMillis()/1000);
-        Integer row = userMapper.insert(user);
-        Long id = user.getUserId();
-        System.err.println("影响行数==>" + row);
-        System.err.println("id==>" + id);
-        return user;
+        user.setUserName(name);
+        user.setUserAge(age);
+
+        return userService.saveUser(user);
     }
 }
