@@ -54,6 +54,13 @@ public class AppTest {
     }
 
     @Test
+    public void testSelectMyPage() {
+        Page<User> page = userService.selectMyPage();
+        System.out.println(page);
+        System.out.println(page.getRecords());
+    }
+
+    @Test
     public void nextId() {
         for (int i = 0; i < 10; i++) {
             System.out.println(snowFlake.nextId());

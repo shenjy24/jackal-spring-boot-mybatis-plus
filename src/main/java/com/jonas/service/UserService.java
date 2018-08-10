@@ -50,4 +50,14 @@ public class UserService {
         List<Integer> result  = userMapper.selectObjs(wrapper);
         return result.get(0);
     }
+
+    public Page<User> selectMyPage() {
+        Wrapper wrapper = Condition.create()
+                .setSqlSelect("sum(user_age)")
+                .eq("user_id", 1027800640532697089L);
+
+        Page<User> page = new Page<>();
+        page.setRecords(userMapper.selectMyPage(page, wrapper));
+        return page;
+    }
 }
