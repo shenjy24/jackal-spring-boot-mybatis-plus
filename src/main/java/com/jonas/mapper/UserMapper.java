@@ -20,4 +20,6 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User> {
 
     List<User> selectMyPage(RowBounds rowBounds, @Param("ew") Wrapper<User> wrapper);
+
+    List<User> listUser(@Param("startTime") Integer startTime);
 }

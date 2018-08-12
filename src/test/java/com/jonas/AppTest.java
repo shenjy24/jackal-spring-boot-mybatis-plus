@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Unit test for simple App.
@@ -51,6 +52,12 @@ public class AppTest {
         Page<User> page = userService.selectMyPage();
         System.out.println(page);
         System.out.println(page.getRecords());
+    }
+
+    @Test
+    public void testListUser() {
+        List<User> users = userService.listUser(1533886497);
+        System.out.println(users);
     }
 
     @Test

@@ -8,9 +8,9 @@ import com.jonas.entity.User;
 import com.jonas.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -59,5 +59,9 @@ public class UserService {
         Page<User> page = new Page<>();
         page.setRecords(userMapper.selectMyPage(page, wrapper));
         return page;
+    }
+
+    public List<User> listUser(Integer startTime) {
+        return userMapper.listUser(startTime);
     }
 }

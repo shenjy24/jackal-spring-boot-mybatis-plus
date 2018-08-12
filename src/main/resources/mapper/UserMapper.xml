@@ -11,4 +11,9 @@
             ${ew.sqlSegment}
         </where>
     </select>
+
+    <select id="listUser" resultType="User">
+        select * from user
+        where ctime > #{startTime}
+    </select>
 </mapper>
