@@ -2,6 +2,7 @@ package com.jonas;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.jonas.entity.User;
+import com.jonas.enums.StatusEnum;
 import com.jonas.service.UserService;
 import com.jonas.utils.SnowFlake;
 import org.junit.Test;
@@ -31,6 +32,7 @@ public class AppTest {
         User user = new User();
         user.setUserName("mybatis");
         user.setUserAge(10);
+        user.setUserStatus(StatusEnum.NORMAL);
         user = userService.saveUser(user);
         System.out.println(user);
     }

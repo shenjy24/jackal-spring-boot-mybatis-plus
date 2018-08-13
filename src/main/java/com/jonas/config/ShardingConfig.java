@@ -17,19 +17,19 @@ import java.util.Map;
 @Component
 public class ShardingConfig {
 
-    @Autowired
-    @Qualifier("primaryDataSource")
-    private DataSource primaryDataSource;
-
-    @Autowired
-    @Qualifier("secondaryDataSource")
-    private DataSource secondaryDataSource;
-
-    @PostConstruct
-    public void init() {
-        Map<String, DataSource> map = new HashMap<String, DataSource>();
-        map.put("testdb0", primaryDataSource);
-        map.put("testdb1", secondaryDataSource);
-        
-    }
+//    @Autowired
+//    @Qualifier("primaryDataSource")
+//    private DataSource primaryDataSource;
+//
+//    @Autowired
+//    @Qualifier("secondaryDataSource")
+//    private DataSource secondaryDataSource;
+//
+//    @PostConstruct
+//    public void init() {
+//        Map<String, DataSource> map = new HashMap<String, DataSource>();
+//        map.put("testdb0", primaryDataSource);
+//        map.put("testdb1", secondaryDataSource);
+//
+//    }
 }

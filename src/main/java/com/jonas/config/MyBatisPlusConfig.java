@@ -33,6 +33,7 @@ public class MyBatisPlusConfig {
         MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource);
         sqlSessionFactory.setTypeAliasesPackage("com.jonas.entity");
+        sqlSessionFactory.setTypeEnumsPackage("com.jonas.enums");
 
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactory.setMapperLocations(resolver.getResources("classpath:/mapper/*.xml"));

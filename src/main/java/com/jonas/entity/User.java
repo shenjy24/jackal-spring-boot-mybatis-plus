@@ -1,10 +1,11 @@
 package com.jonas.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
+import com.jonas.enums.StatusEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -18,20 +19,20 @@ import java.io.Serializable;
 @TableName("user")
 public class User extends Model<User> implements Serializable {
 
-    @TableId(value = "user_id", type = IdType.ID_WORKER)
+    @TableId
     private Long userId;
 
-    @TableField(value = "user_name")
     private String userName;
 
-    @TableField(value = "user_age")
     private Integer userAge;
 
-    @TableField(value = "ctime")
+    @JSONField(serialzeFeatures = SerializerFeature.WriteEnumUsingToString)
+    private StatusEnum userStatus;
+
     private Long ctime;
 
-    @TableField(value = "utime")
     private Long utime;
+
 
     @Override
     public Serializable pkVal() {
