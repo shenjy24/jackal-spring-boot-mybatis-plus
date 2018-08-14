@@ -31,6 +31,12 @@ public class UserService {
         return user;
     }
 
+    public User updateUser(User user) {
+        user.setUtime(System.currentTimeMillis()/1000);
+        userMapper.updateById(user);
+        return user;
+    }
+
     /**
      * 分页查询
      * @return

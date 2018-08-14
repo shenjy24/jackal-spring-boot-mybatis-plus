@@ -38,6 +38,15 @@ public class AppTest {
     }
 
     @Test
+    public void testUpdate() {
+        User user = new User();
+        user.setUserId(1027800640532697089L);
+        user.setUserStatus(StatusEnum.NORMAL);
+        user.setUserAge(20);
+        System.out.println(userService.updateUser(user));
+    }
+
+    @Test
     public void testQuery() {
         Page<User> page = userService.queryUser();
         System.out.println(page.getRecords());
