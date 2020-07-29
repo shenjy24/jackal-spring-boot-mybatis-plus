@@ -1,25 +1,23 @@
 package com.jonas;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.jonas.common.StatusEnum;
 import com.jonas.entity.User;
-import com.jonas.enums.StatusEnum;
 import com.jonas.service.UserService;
-import com.jonas.utils.SnowFlake;
+import com.jonas.util.SnowFlake;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
  * Unit test for simple App.
  */
-@SpringBootTest(classes = App.class)
+@SpringBootTest
 @RunWith(SpringRunner.class)
-public class AppTest {
+public class ApplicationTest {
 
     @Autowired
     private UserService userService;
@@ -32,7 +30,7 @@ public class AppTest {
         User user = new User();
         user.setUserName("mybatis");
         user.setUserAge(10);
-        user.setUserStatus(StatusEnum.NORMAL);
+        user.setUserStatus(StatusEnum.NORMAL.getCode());
         user = userService.saveUser(user);
         System.out.println(user);
     }
@@ -41,28 +39,9 @@ public class AppTest {
     public void testUpdate() {
         User user = new User();
         user.setUserId(1027800640532697089L);
-        user.setUserStatus(StatusEnum.NORMAL);
+        user.setUserStatus(StatusEnum.NORMAL.getCode());
         user.setUserAge(20);
         System.out.println(userService.updateUser(user));
-    }
-
-    @Test
-    public void testQuery() {
-        Page<User> page = userService.queryUser();
-        System.out.println(page.getRecords());
-    }
-
-    @Test
-    public void testSumAge() {
-        BigDecimal sum = userService.sumAge();
-        System.out.println(sum);
-    }
-
-    @Test
-    public void testSelectMyPage() {
-        Page<User> page = userService.selectMyPage();
-        System.out.println(page);
-        System.out.println(page.getRecords());
     }
 
     @Test

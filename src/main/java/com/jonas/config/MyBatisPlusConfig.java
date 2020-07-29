@@ -1,23 +1,24 @@
 package com.jonas.config;
 
-import com.baomidou.mybatisplus.MybatisConfiguration;
-import com.baomidou.mybatisplus.MybatisXMLLanguageDriver;
-import com.baomidou.mybatisplus.entity.GlobalConfiguration;
-import com.baomidou.mybatisplus.enums.IdType;
-import com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor;
-import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
-import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
-import org.apache.ibatis.plugin.Interceptor;
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import com.jonas.common.DbTypeEnum;
+import com.jonas.util.DynamicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.mapper.MapperScannerConfigurer;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 【 enter the class description 】
@@ -27,35 +28,53 @@ import javax.sql.DataSource;
 @Configuration
 @MapperScan("com.jonas.mapper")
 public class MyBatisPlusConfig {
-
     @Bean
-    public SqlSessionFactory sqlSessionFactory(DataSource dataSource, ResourceLoader resourceLoader) throws Exception{
-        MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
-        sqlSessionFactory.setDataSource(dataSource);
-        sqlSessionFactory.setTypeAliasesPackage("com.jonas.entity");
-        sqlSessionFactory.setTypeEnumsPackage("com.jonas.enums");
-
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sqlSessionFactory.setMapperLocations(resolver.getResources("classpath:/mapper/*.xml"));
-
-        MybatisConfiguration configuration = new MybatisConfiguration();
-        configuration.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
-        configuration.setJdbcTypeForNull(JdbcType.NULL);
-        configuration.setMapUnderscoreToCamelCase(true);
-        sqlSessionFactory.setConfiguration(configuration);
-        sqlSessionFactory.setPlugins(new Interceptor[]{
-                new PaginationInterceptor(),
-                new PerformanceInterceptor(),
-                new OptimisticLockerInterceptor()
-        });
-        sqlSessionFactory.setGlobalConfig(globalConfig());
-        return sqlSessionFactory.getObject();
+    public PaginationInterceptor paginationInterceptor() {
+        return new PaginationInterceptor();
     }
 
+    @Bean(name = "db1")
+    @ConfigurationProperties(prefix = "spring.datasource.druid.db1")
+    public DataSource db1() {
+        return DruidDataSourceBuilder.create().build();
+    }
+
+    @Bean(name = "db2")
+    @ConfigurationProperties(prefix = "spring.datasource.druid.db2")
+    public DataSource db2() {
+        return DruidDataSourceBuilder.create().build();
+    }
+
+    /**
+     * 动态数据源配置
+     *
+     * @return
+     */
     @Bean
-    public GlobalConfiguration globalConfig() {
-        GlobalConfiguration globalConfig = new GlobalConfiguration();
-        globalConfig.setIdType(IdType.ID_WORKER.getKey());
-        return globalConfig;
+    @Primary
+    public DataSource multipleDataSource(@Qualifier("db1") DataSource db1,
+                                         @Qualifier("db2") DataSource db2) {
+        DynamicDataSource dynamicDataSource = new DynamicDataSource();
+        Map<Object, Object> targetDataSources = new HashMap<>();
+        targetDataSources.put(DbTypeEnum.db1.name(), db1);
+        targetDataSources.put(DbTypeEnum.db2.name(), db2);
+        dynamicDataSource.setTargetDataSources(targetDataSources);
+        dynamicDataSource.setDefaultTargetDataSource(db1); // 程序默认数据源，这个要根据程序调用数据源频次，经常把常调用的数据源作为默认
+        return dynamicDataSource;
+    }
+
+    @Bean("sqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
+        MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
+        sqlSessionFactory.setDataSource(multipleDataSource(db1(), db2()));
+
+        MybatisConfiguration configuration = new MybatisConfiguration();
+        configuration.setJdbcTypeForNull(JdbcType.NULL);
+        configuration.setMapUnderscoreToCamelCase(true);
+        configuration.setCacheEnabled(false);
+        sqlSessionFactory.setConfiguration(configuration);
+        //添加分页功能
+        sqlSessionFactory.setPlugins(paginationInterceptor());
+        return sqlSessionFactory.getObject();
     }
 }
