@@ -23,6 +23,3 @@ spring:
         initialSize: 5
         minIdle: 5
         maxActive: 20
-
-mybatis-plus:
-  mapper-locations: classpath:/mapper/**/*.xml

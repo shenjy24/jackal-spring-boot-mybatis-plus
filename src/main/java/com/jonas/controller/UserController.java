@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * 【 enter the class description 】
  *
@@ -26,4 +28,10 @@ public class UserController {
 
         return userService.saveUser(user);
     }
+
+    @RequestMapping("/list")
+    public List<User> list(Integer startTime) {
+        return userService.listUser(startTime);
+    }
+
 }
