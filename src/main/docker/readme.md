@@ -1,7 +1,7 @@
 #### 一.启动`MySQL`服务
 
 ```
-docker run -p 3306:3306 --name mysql-web -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+docker run -p 13306:3306 --name mysql-web -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
 ```
 
 #### 二.构建`SpringBoot`服务镜像
@@ -25,4 +25,11 @@ docker run -d -p 18080:8080 -e TZ=Asia/Shanghai --name jackal-web --link mysql-w
 - 通过挂载日志目录，使得可以在工作目录下的`logs`目录查看到服务日志。
 - `--link mysql-web:mysql-web`：第一个参数为docker镜像名称，第二个参数为别名，此处应和配置文件中数据库的地址保持一致 。
 
+#### 四.接口测试
+
+使用`postman`调用如下接口进行测试：
+
+```
+http://localhost:18080/user/save
+```
 
