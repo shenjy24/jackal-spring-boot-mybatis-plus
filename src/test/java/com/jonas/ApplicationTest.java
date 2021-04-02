@@ -28,6 +28,7 @@ public class ApplicationTest {
     @Test
     public void insert() {
         User user = new User();
+        user.setUserId(100L);
         user.setUserName("mybatis");
         user.setUserAge(10);
         user.setUserStatus(StatusEnum.NORMAL.getCode());
@@ -38,7 +39,7 @@ public class ApplicationTest {
     @Test
     public void testUpdate() {
         User user = new User();
-        user.setUserId(1027800640532697089L);
+        user.setUserId(2L);
         user.setUserStatus(StatusEnum.NORMAL.getCode());
         user.setUserAge(20);
         System.out.println(userService.updateUser(user));

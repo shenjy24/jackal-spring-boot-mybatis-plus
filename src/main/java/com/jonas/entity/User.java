@@ -27,7 +27,7 @@ public class User implements Serializable {
 
     private Integer userStatus;
 
-    private Long ctime;
+    private Integer ctime;
 
-    private Long utime;
+    private Integer utime;
 }

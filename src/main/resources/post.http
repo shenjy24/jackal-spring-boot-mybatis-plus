@@ -1,0 +1,15 @@
+### Send POST request with json body
+POST http://localhost:8080/user/list
+Content-Type: application/json
+
+{
+  "startTime": 999
+}
+
+### Send POST request with json body
+POST http://localhost:8080/user/list
+Content-Type: application/json
+
+{
+  "startTime": 1000
+}

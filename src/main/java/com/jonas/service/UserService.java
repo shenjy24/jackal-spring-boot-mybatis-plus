@@ -1,8 +1,9 @@
 package com.jonas.service;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jonas.entity.User;
-import com.jonas.mapper.db1.UserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.jonas.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,25 +14,21 @@ import java.util.List;
  * @author shenjy 2018/08/10
  */
 @Service
-public class UserService {
-
-    @Autowired
-    private UserMapper userMapper;
+public class UserService extends ServiceImpl<UserMapper, User> {
 
     public User saveUser(User user) {
-        user.setCtime(System.currentTimeMillis()/1000);
-        user.setUtime(System.currentTimeMillis()/1000);
-        userMapper.insert(user);
-        return user;
+        user.setCtime((int) (System.currentTimeMillis() / 1000));
+        user.setUtime((int) (System.currentTimeMillis() / 1000));
+        return saveOrUpdate(user) ? user : null;
     }
 
     public User updateUser(User user) {
-        user.setUtime(System.currentTimeMillis()/1000);
-        userMapper.updateById(user);
-        return user;
+        user.setUtime((int) (System.currentTimeMillis() / 1000));
+        return updateById(user) ? user : null;
     }
 
+    @DS("slave")
     public List<User> listUser(Integer startTime) {
-        return userMapper.listUser(startTime);
+        return baseMapper.listUser(startTime);
     }
 }
