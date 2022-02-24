@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * 【 enter the class description 】
@@ -18,8 +19,8 @@ import java.sql.Timestamp;
 @TableName("user")
 public class User implements Serializable {
 
-    @TableId(type = IdType.AUTO)
-    private Long userId;
+    @TableId(type = IdType.ASSIGN_UUID)
+    private String userId;
 
     private String userName;
 
@@ -27,7 +28,7 @@ public class User implements Serializable {
 
     private Integer userStatus;
 
-    private Integer ctime;
+    private LocalDateTime createTime;
 
-    private Integer utime;
+    private LocalDateTime updateTime;
 }
