@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jonas.entity.User;
 import com.jonas.mapper.UserMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,24 +17,12 @@ import java.util.List;
 @Service
 public class UserService extends ServiceImpl<UserMapper, User> {
 
-    @Transactional
+    //@Transactional
     public User saveUser(User user) {
-        insertUser(user);
-
-        //int i = 10 / 0;
-        return user;
-    }
-
-    public void insertUser(User user) {
-        user.setCtime((int) (System.currentTimeMillis() / 1000));
-        user.setUtime((int) (System.currentTimeMillis() / 1000));
-        save(user);
-
-        //int i = 10 / 0;
+        return save(user) ? user : null;
     }
 
     public User updateUser(User user) {
-        //user.setUtime((int) (System.currentTimeMillis() / 1000));
         return updateById(user) ? user : null;
     }
 
@@ -44,6 +31,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         return baseMapper.selectOne(wrapper);
     }
 
+//    @DS("slave")
     public List<User> listUser(Integer startTime) {
         return baseMapper.listUser(startTime);
     }

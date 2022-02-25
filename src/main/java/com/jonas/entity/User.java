@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * 【 enter the class description 】
@@ -27,8 +27,8 @@ public class User implements Serializable {
     private boolean login;
 
     @TableField(fill = FieldFill.INSERT)
-    private Integer ctime;
+    private LocalDateTime createTime;
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Integer utime;
+    private LocalDateTime updateTime;
 }
