@@ -3,7 +3,7 @@ package com.jonas.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jonas.entity.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -14,5 +14,8 @@ import java.util.List;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
-    List<User> listUser(@Param("startTime") Integer startTime);
+    List<User> listUser(Integer startTime);
+
+    @Select("select * from `user`")
+    List<User> getUser();
 }

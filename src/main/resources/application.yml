@@ -1,28 +1,9 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   datasource:
-    dynamic:
-      primary: master #设置默认的数据源或者数据源组,默认值即为master
-      strict: true #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源.
-      datasource:
-        master:
-          url: jdbc:mysql://127.0.0.1:3306/db_master?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong
-          username: root
-          password: 123456
-          driver-class-name: com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
-          schema: classpath*:sql/schema.sql # 配置则生效,自动初始化表结构
-#          data: classpath*:sql/data.sql # 配置则生效,自动初始化数据
-          continue-on-error: true # 默认true,初始化失败是否继续
-          separator: ";" # sql默认分号分隔符
-        slave_1:
-          url: jdbc:mysql://127.0.0.1:3306/db_slave1?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong
-          username: root
-          password: 123456
-          driver-class-name: com.mysql.cj.jdbc.Driver
-        slave_2:
-          url: jdbc:mysql://127.0.0.1:3306/db_slave2?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong
-          username: root
-          password: 123456
-          driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/local?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong
+    username: root
+    password: 123456

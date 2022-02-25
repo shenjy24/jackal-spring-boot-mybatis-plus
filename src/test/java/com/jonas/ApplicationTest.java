@@ -2,6 +2,7 @@ package com.jonas;
 
 import com.jonas.common.StatusEnum;
 import com.jonas.entity.User;
+import com.jonas.mapper.UserMapper;
 import com.jonas.service.UserService;
 import com.jonas.util.SnowFlake;
 import org.junit.Test;
@@ -21,6 +22,8 @@ public class ApplicationTest {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserMapper userMapper;
 
     @Autowired
     private SnowFlake snowFlake;
@@ -28,20 +31,20 @@ public class ApplicationTest {
     @Test
     public void insert() {
         User user = new User();
-        user.setUserId(100L);
+        //user.setUserId(100L);
         user.setUserName("mybatis");
         user.setUserAge(10);
         user.setUserStatus(StatusEnum.NORMAL.getCode());
-        user = userService.saveUser(user);
+        userService.insertUser(user);
         System.out.println(user);
     }
 
     @Test
     public void testUpdate() {
         User user = new User();
-        user.setUserId(2L);
+        user.setUserId("");
         user.setUserStatus(StatusEnum.NORMAL.getCode());
-        user.setUserAge(20);
+        user.setUserAge(40);
         System.out.println(userService.updateUser(user));
     }
 
@@ -50,6 +53,13 @@ public class ApplicationTest {
         List<User> users = userService.listUser(1533886497);
         System.out.println(users);
     }
+
+    @Test
+    public void testGetUser() {
+        List<User> user = userMapper.getUser();
+        System.out.println(user);
+    }
+
 
     @Test
     public void nextId() {
