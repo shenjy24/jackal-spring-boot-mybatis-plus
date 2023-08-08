@@ -2,6 +2,8 @@ package com.jonas.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jonas.entity.User;
 import com.jonas.mapper.UserMapper;
@@ -34,5 +36,13 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 //    @DS("slave")
     public List<User> listUser(Integer startTime) {
         return baseMapper.listUser(startTime);
+    }
+
+    public void deleteUSer(String userId) {
+//        QueryWrapper<User> wrapper = new QueryWrapper<>();
+//        wrapper.eq("user_id", userId);
+//        baseMapper.delete(wrapper);
+
+        baseMapper.delete(Wrappers.<User>lambdaQuery().eq(User::getUserId, userId));
     }
 }

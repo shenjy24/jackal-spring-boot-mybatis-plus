@@ -47,4 +47,8 @@ public class UserController {
         return userService.listUser(startTime);
     }
 
+    @RequestMapping("/delete")
+    public void delete(String userId) {
+        userService.deleteUSer(userId);
+    }
 }
