@@ -33,9 +33,22 @@ public class UserController {
         return userService.saveUser(user);
     }
 
+    @RequestMapping("/update")
+    public User update(String uuid, String name, Integer age) {
+        User user = new User();
+        user.setUserId(uuid);
+        user.setUserName(name);
+        user.setUserAge(age);
+        return userService.updateUser(user);
+    }
+
     @RequestMapping("/list")
     public List<User> list(Integer startTime) {
         return userService.listUser(startTime);
     }
 
+    @RequestMapping("/delete")
+    public void delete(String userId) {
+        userService.deleteUSer(userId);
+    }
 }

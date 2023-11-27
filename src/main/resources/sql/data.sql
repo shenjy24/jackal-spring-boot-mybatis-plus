@@ -1,2 +1,2 @@
-insert into `user`(`user_name`, `user_age`, `user_status`, `ctime`, `utime`)
-values ("Tom", 20, 1, unix_timestamp(now()), unix_timestamp(now()));
+insert into `user`(`user_id`, `user_name`, `user_age`, `user_status`, `create_time`, `update_time`)
+values (1, "Tom", 20, 1, now(), now());

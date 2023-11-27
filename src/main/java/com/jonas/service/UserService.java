@@ -1,12 +1,14 @@
 package com.jonas.service;
 
-//import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jonas.entity.User;
 import com.jonas.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -17,19 +19,30 @@ import java.util.List;
 @Service
 public class UserService extends ServiceImpl<UserMapper, User> {
 
+    //@Transactional
     public User saveUser(User user) {
-        user.setCreateTime(LocalDateTime.now());
-        user.setUpdateTime(LocalDateTime.now());
-        return saveOrUpdate(user) ? user : null;
+        return save(user) ? user : null;
     }
 
     public User updateUser(User user) {
-        user.setUpdateTime(LocalDateTime.now());
         return updateById(user) ? user : null;
+    }
+
+    public User getUser(String userName) {
+        Wrapper<User> wrapper = new QueryWrapper<User>().lambda().eq(User::getUserName, userName);
+        return baseMapper.selectOne(wrapper);
     }
 
 //    @DS("slave")
     public List<User> listUser(Integer startTime) {
         return baseMapper.listUser(startTime);
+    }
+
+    public void deleteUSer(String userId) {
+//        QueryWrapper<User> wrapper = new QueryWrapper<>();
+//        wrapper.eq("user_id", userId);
+//        baseMapper.delete(wrapper);
+
+        baseMapper.delete(Wrappers.<User>lambdaQuery().eq(User::getUserId, userId));
     }
 }

@@ -2,6 +2,7 @@ package com.jonas;
 
 import com.jonas.common.StatusEnum;
 import com.jonas.entity.User;
+import com.jonas.mapper.UserMapper;
 import com.jonas.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +21,8 @@ public class ApplicationTest {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserMapper userMapper;
 
     @Test
     public void insert() {
@@ -27,7 +30,7 @@ public class ApplicationTest {
         user.setUserName("mybatis");
         user.setUserAge(10);
         user.setUserStatus(StatusEnum.NORMAL.getCode());
-        user = userService.saveUser(user);
+        userService.saveUser(user);
         System.out.println(user);
     }
 
@@ -36,13 +39,13 @@ public class ApplicationTest {
         User user = new User();
         user.setUserId("");
         user.setUserStatus(StatusEnum.NORMAL.getCode());
-        user.setUserAge(20);
+        user.setUserAge(40);
         System.out.println(userService.updateUser(user));
     }
 
     @Test
-    public void testListUser() {
-        List<User> users = userService.listUser(1533886497);
-        System.out.println(users);
+    public void testGetUser() {
+        List<User> user = userMapper.getUser();
+        System.out.println(user);
     }
 }
