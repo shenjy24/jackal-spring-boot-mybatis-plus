@@ -1,12 +1,13 @@
 package com.jonas.controller;
 
 import com.jonas.common.JsonPage;
+import com.jonas.controller.req.NodeReq;
 import com.jonas.entity.Node;
 import com.jonas.service.NodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -23,10 +24,8 @@ public class NodeController {
     private final NodeService nodeService;
 
     @PostMapping("/query")
-    public JsonPage<Node> queryNode(@RequestParam Long nodeId,
-                                    @RequestParam String content,
-                                    @RequestParam Long page,
-                                    @RequestParam Long pageSize) {
-        return nodeService.queryNode(nodeId, content, page, pageSize);
+    public JsonPage<Node> queryNode(@RequestBody NodeReq req) {
+        return nodeService.queryNode(req.getNodeId(), req.getContent(), req.getUserAge(),
+                req.getPage(), req.getPageSize());
     }
 }

@@ -8,6 +8,8 @@ import com.jonas.entity.Node;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * NodeMapper
  *
@@ -18,10 +20,14 @@ import org.apache.ibatis.annotations.Select;
 public interface NodeMapper extends BaseMapper<Node> {
 
     @Select("WITH RECURSIVE NodeCTE AS (" +
-            "SELECT id, name, parent_id from node where id = #{nodeId} " +
+            "SELECT id, name, parent_id, user_id from node where id = #{nodeId} " +
             "UNION ALL " +
-            "SELECT nd.id, nd.name, nd.parent_id from node nd " +
+            "SELECT nd.id, nd.name, nd.parent_id, nd.user_id from node nd " +
             "INNER JOIN NodeCTE ncte ON nd.parent_id = ncte.id) " +
-            "SELECT id from NodeCTE where name like CONCAT('%', #{content}, '%')")
-    IPage<Node> queryNode(Page<?> page, @Param("nodeId") Long nodeId, @Param("content") String content);
+            "SELECT id from NodeCTE where name like CONCAT('%', #{content}, '%') and user_id in " +
+            "(select user_id from user where user_age = #{userAge})")
+    IPage<Node> queryNode(Page<?> page,
+                          @Param("nodeId") Long nodeId,
+                          @Param("content") String content,
+                          @Param("userAge") Integer userAge);
 }

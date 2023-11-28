@@ -8,6 +8,8 @@ import com.jonas.mapper.NodeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * NodeService
  *
@@ -19,9 +21,9 @@ import org.springframework.stereotype.Service;
 public class NodeService {
     private final NodeMapper nodeMapper;
 
-    public JsonPage<Node> queryNode(Long nodeId, String content, long pageNum, long pageSize) {
+    public JsonPage<Node> queryNode(Long nodeId, String content, Integer age, long pageNum, long pageSize) {
         Page<Node> page = new Page<>(pageNum, pageSize);
-        IPage<Node> pageResult = nodeMapper.queryNode(page, nodeId, content);
+        IPage<Node> pageResult = nodeMapper.queryNode(page, nodeId, content, age);
 
         return new JsonPage<>(pageResult.getTotal(), pageResult.getRecords());
     }

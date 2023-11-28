@@ -18,6 +18,7 @@ public class Node {
     private Long id;
     private String name;
     private Long parentId;
+    private Long userId;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }
