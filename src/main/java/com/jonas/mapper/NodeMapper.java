@@ -18,9 +18,9 @@ import org.apache.ibatis.annotations.Select;
 public interface NodeMapper extends BaseMapper<Node> {
 
     @Select("WITH RECURSIVE NodeCTE AS (" +
-            "SELECT id, name, parent_id from node_dir where id = #{nodeId} " +
+            "SELECT id, name, parent_id from node where id = #{nodeId} " +
             "UNION ALL " +
-            "SELECT nd.id, nd.name, nd.parent_id, nd.create_time from node_dir nd " +
+            "SELECT nd.id, nd.name, nd.parent_id from node nd " +
             "INNER JOIN NodeCTE ncte ON nd.parent_id = ncte.id) " +
             "SELECT id from NodeCTE where name like CONCAT('%', #{content}, '%')")
     IPage<Node> queryNode(Page<?> page, @Param("nodeId") Long nodeId, @Param("content") String content);
