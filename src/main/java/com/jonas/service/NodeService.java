@@ -21,6 +21,10 @@ import java.util.List;
 public class NodeService {
     private final NodeMapper nodeMapper;
 
+    public Node getNode(Long nodeId) {
+        return nodeMapper.selectById(nodeId);
+    }
+
     public JsonPage<Node> queryNode(Long nodeId, String content, Integer age, long pageNum, long pageSize) {
         Page<Node> page = new Page<>(pageNum, pageSize);
         IPage<Node> pageResult = nodeMapper.queryNode(page, nodeId, content, age);
